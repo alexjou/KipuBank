@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏦 KipuBank - Banco Digital na Blockchain</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .contract-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 0.9em;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+
+        .section {
+            background: #fafafa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .section h2 {
+            color: #495057;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #007bff;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        button {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #28a745, #1e7e34);
+        }
+
+        .btn-info {
+            background: linear-gradient(45deg, #17a2b8, #117a8b);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(45deg, #ffc107, #d39e00);
+            color: #333;
+        }
+        
+        .btn-small {
+            padding: 8px 15px;
+            width: auto;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .status {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-weight: 600;
+            display: none;
+        }
+        
+        @media (min-width: 600px) {
+            .info-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+                margin-bottom: 20px;
+            }
+        }
+        
+        @media (max-width: 599px) {
+            .info-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                margin-bottom: 20px;
+            }
+        }
+        
+        .info-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+        
+        .info-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #495057;
+        }
+        
+        .info-item span {
+            font-size: 18px;
+            font-weight: 600;
+            color: #28a745;
+            display: block;
+            padding: 8px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+        
+        .espaco-info {
+            margin-top: 8px;
+            font-size: 14px;
+        }
+        
+        #espaco-disponivel {
+            font-size: 14px;
+            color: #28a745;
+            font-style: italic;
+        }
+
+        .status-connected {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+
+        .resultado {
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-weight: 500;
+            word-wrap: break-word;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        .resultado.sucesso {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+
+        .resultado.erro {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+
+        .resultado.vazio {
+            background: #fff3cd;
+            color: #856404;
+            border: 2px solid #ffeaa7;
+        }
+
+        .contract-link {
+            color: #007bff;
+            text-decoration: none;
+            font-family: monospace;
+            word-break: break-all;
+            font-size: 0.95em;
+            display: inline-block;
+            max-width: 100%;
+            padding: 8px 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+
+        .contract-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏦 KipuBank</h1>
+        <p class="subtitle">Banco digital seguro na blockchain Ethereum</p>
+        
+        <div class="contract-info">
+            <strong>Contrato na Rede Sepolia:</strong><br>
+            <div style="margin: 10px 0; padding: 0 15px;">
+                <a id="contract-link" class="contract-link" target="_blank" rel="noopener noreferrer">
+                    Carregando endereço...
+                </a>
+            </div>
+            <div style="font-size: 0.8em; margin-top: 5px; color: #666;">
+                (Clique no endereço para visualizar no Etherscan)
+            </div>
+        </div>
+
+        <!-- Conexão -->
+        <div class="section">
+            <h2>🔗 Conectar Carteira</h2>
+            <button id="btn-conectar">
+                Conectar MetaMask
+            </button>
+            <div id="status-conexao" class="status status-connected">
+                Carteira não conectada
+            </div>
+        </div>
+
+        <!-- Informações do Banco -->
+        <div id="secao-operacoes" class="section" style="display: none;">
+            <h2>� Informações do Banco</h2>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>Seu Saldo:</strong>
+                    <span id="saldo-usuario">0.0 ETH</span>
+                </div>
+                <div class="info-item">
+                    <strong>Saldo Total do Banco:</strong>
+                    <span id="saldo-banco">0.0 ETH</span>
+                </div>
+                <div class="info-item">
+                    <strong>Limite do Banco (Cap):</strong>
+                    <span id="limite-banco">0.0 ETH</span>
+                </div>
+                <div class="info-item" style="background-color: #f0f8ff;">
+                    <strong>Espaço Disponível:</strong>
+                    <span id="espaco-disponivel" style="background-color: transparent;">Carregando espaço disponível...</span>
+                </div>
+                
+            </div>
+            <div style="text-align: center; background-color: transparent; border: none; align-items: center;">
+                <button id="btn-atualizar" class="btn-info" style="width: auto; padding: 10px 20px;">
+                    🔄 Atualizar Saldos
+                </button>
+            </div>
+            
+            <div id="status-transacao" class="status" style="display: none; margin-top: 20px;">
+                Aguardando transações...
+            </div>
+            
+            <!-- Depósitos -->
+            <h2>💰 Depósito</h2>
+            <div class="input-group">
+                <label for="valor-deposito">Valor a depositar (ETH):</label>
+                <input 
+                    id="valor-deposito" 
+                    type="number" 
+                    step="0.001"
+                    min="0.001"
+                    placeholder="Ex: 0.01"
+                />
+            </div>
+            <button id="btn-depositar" class="btn-success">
+                Depositar ETH
+            </button>
+            
+            <!-- Saques -->
+            <h2>💸 Saque</h2>
+            <div class="input-group">
+                <label for="valor-saque">Valor a sacar (ETH):</label>
+                <input 
+                    id="valor-saque" 
+                    type="number" 
+                    step="0.001"
+                    min="0.001"
+                    placeholder="Ex: 0.01"
+                />
+            </div>
+            <button id="btn-sacar" class="btn-info">
+                Sacar ETH
+            </button>
+            
+            <!-- Atualização de Limite (apenas para o proprietário) -->
+            <div id="secao-admin" style="margin-top: 30px; border-top: 2px dashed #ccc; padding-top: 20px;">
+                <h2>🔒 Administração (Apenas Proprietário)</h2>
+                <p style="margin-bottom: 15px; color: #666; font-style: italic;">Estas opções estão disponíveis apenas para o proprietário do contrato.</p>
+                
+                <h3>📝 Atualizar Limite do Banco</h3>
+                <div class="input-group">
+                    <label for="novo-limite">Novo limite (ETH):</label>
+                    <input 
+                        id="novo-limite" 
+                        type="number" 
+                        step="0.01"
+                        min="0.01"
+                        placeholder="Ex: 5.0"
+                    />
+                </div>
+                <button id="btn-atualizar-cap" class="btn-warning">
+                    Atualizar Limite do Banco
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.7.0/dist/ethers.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
